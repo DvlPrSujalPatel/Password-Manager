@@ -132,7 +132,7 @@ const Manager = () => {
         </p>
         <div className="flex flex-col p-4 gap-3 items-center">
           <input
-            className="rounded-lg border-2 outline-none text-black border-blue-300 w-full md:w-1/2 py-2 px-3 placeholder:text-gray-600"
+            className="rounded-lg border-2 outline-none text-black border-blue-300 w-full  py-2 px-3 placeholder:text-gray-600"
             type="text"
             placeholder="Website name or URL"
             value={form.site}
