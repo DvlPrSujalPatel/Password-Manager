@@ -12,10 +12,16 @@ const Navbar = () => {
       </div>
       <ul>
         <li className="flex gap-4  font-bold">
-          <a href="" className='hover:text-blue-300 '>
+          <a
+            href="https://github.com/DvlPrSujalPatel/Password-Manager"
+            className="hover:text-blue-300 "
+          >
             <i class="fa-brands fa-github"></i> Github
           </a>
-          <a href="#" className="hover:text-blue-300">
+          <a
+            href="https://www.linkedin.com/in/sujal-patel-4b62b0316/"
+            className="hover:text-blue-300"
+          >
             Contact
           </a>
         </li>
