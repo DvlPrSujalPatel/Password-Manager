@@ -12,7 +12,7 @@ const Manager = () => {
   const [showPasswordArray, setShowPasswordArray] = useState({});
 
   useEffect(() => {
-    let passwords = localStorage.getItem("passwords");
+    const passwords = localStorage.getItem("passwords");
     if (passwords) {
       setPasswordArray(JSON.parse(passwords));
     }
@@ -57,7 +57,6 @@ const Manager = () => {
       toast.success("Password added successfully!");
     }
 
-    // Clear the form after saving
     setForm({ site: "", username: "", password: "" });
   };
 
@@ -122,10 +121,7 @@ const Manager = () => {
         theme="light"
       />
 
-      <div
-        className="mx-auto max-w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20"
-        id="home"
-      >
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl md:text-4xl font-bold text-center mt-4">
           <span className="text-blue-500">&lt;</span>
           <span className="text-gray-300">Pass</span>
@@ -136,7 +132,7 @@ const Manager = () => {
         </p>
         <div className="flex flex-col p-4 gap-3 items-center">
           <input
-            className="rounded-lg border-2 outline-none text-black border-blue-300 w-full py-2 px-3 placeholder:text-gray-600"
+            className="rounded-lg border-2 outline-none text-black border-blue-300 w-full md:w-1/2 py-2 px-3 placeholder:text-gray-600"
             type="text"
             placeholder="Website name or URL"
             value={form.site}
@@ -144,7 +140,7 @@ const Manager = () => {
             name="site"
             required
           />
-          <div className="flex flex-col md:flex-row w-full justify-between gap-3">
+          <div className="flex flex-col md:flex-row w-full gap-3">
             <input
               type="text"
               className="rounded-lg border-2 outline-none text-black border-blue-300 w-full md:w-1/2 placeholder:text-gray-600 py-2 px-3"
@@ -180,7 +176,7 @@ const Manager = () => {
           </div>
           <button
             onClick={savePassword}
-            className="flex justify-center items-center bg-blue-500 rounded-xl px-6 py-3 w-fit gap-2 text-gray-900 text-xl hover:bg-blue-400 transition-all ease"
+            className="bg-blue-500 rounded-xl px-6 py-3 text-gray-900 text-xl hover:bg-blue-400 transition-all ease"
           >
             <lord-icon
               src="https://cdn.lordicon.com/jgnvfzqg.json"
@@ -189,111 +185,113 @@ const Manager = () => {
             {editId ? "Update" : "Add"}
           </button>
         </div>
-        <div className="passwords w-full mt-[-15px]">
+        <div className="passwords w-full mt-8">
           <h2 className="text-2xl text-center text-white my-3">
             Your Passwords
           </h2>
-          <div className="overflow-x-auto max-h-[36vh]">
+          <div className="overflow-x-auto">
             {passwordArray.length === 0 && (
               <div className="text-white text-center text-blue-400">
                 No Passwords to Show
               </div>
             )}
             {passwordArray.length !== 0 && (
-              <table className="table-auto sm:w-full rounded-lg overflow-hidden w-1/4">
-                <thead className="text-center bg-blue-500 text-white sm:w-full w-1/4">
-                  <tr className="border-2 border-blue-600 w-1/4">
-                    <th className="text-center py-2 border-r-2 border-blue-600">
-                      Website
-                    </th>
-                    <th className="text-center py-2 border-r-2 border-blue-600">
-                      Username/Email
-                    </th>
-                    <th className="text-center py-2 border-r-2 border-blue-600 w-1/4">
-                      Password
-                    </th>
-                    <th className="w-20">Actions</th>
-                  </tr>
-                </thead>
-
-                <tbody className="text-center bg-blue-300  ">
-                  {passwordArray.map((item, index) => (
-                    <tr key={index} className="border-2 border-blue-600">
-                      <td className="text-center py-2 border-r-2 border-blue-600">
-                        <div className="flex justify-center items-center gap-2">
-                          <a
-                            href={item.site}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {item.site}
-                          </a>
-                          <button
-                            className="bg-blue-500 text-white rounded-full p-1 hover:bg-blue-600 transition"
-                            onClick={() => copyToClipboard(item.site)}
-                          >
-                            <i className="fa-solid fa-copy"></i>
-                          </button>
-                        </div>
-                      </td>
-                      <td className="text-center py-2 border-r-2 border-blue-600">
-                        <div className="flex justify-center items-center gap-2">
-                          {item.username}
-                          <button
-                            className="bg-blue-500 text-white rounded-full p-1 hover:bg-blue-600 transition"
-                            onClick={() => copyToClipboard(item.username)}
-                          >
-                            <i className="fa-solid fa-copy"></i>
-                          </button>
-                        </div>
-                      </td>
-                      <td className="text-center py-2 border-r-2 border-blue-600">
-                        <div className="flex justify-center items-center gap-2">
-                          <input
-                            type={
-                              showPasswordArray[item.id] ? "text" : "password"
-                            }
-                            value={item.password}
-                            readOnly
-                            className="bg-transparent border-none text-center"
-                          />
-                          <button
-                            className=" text-white rounded-full p-1  transition"
-                            onClick={() => toggleShowPassword(item.id)}
-                          >
-                            <img
-                              ref={ref}
-                              className="w-5"
-                              src="show.png"
-                              alt=""
-                            />
-                          </button>
-                          <button
-                            className="bg-blue-400 text-white rounded-full p-1 hover:bg-blue-600 transition"
-                            onClick={() => copyToClipboard(item.password)}
-                          >
-                            <i className="fa-solid fa-copy"></i>
-                          </button>
-                        </div>
-                      </td>
-                      <td className="w-20">
-                        <span
-                          className="mr-3 cursor-pointer"
-                          onClick={() => editPassword(item.id)}
-                        >
-                          <i className="fa-solid fa-pen-to-square"></i>
-                        </span>
-                        <span
-                          className="cursor-pointer"
-                          onClick={() => deletePassword(item.id)}
-                        >
-                          <i className="fa-solid fa-trash"></i>
-                        </span>
-                      </td>
+              <div className="relative overflow-x-auto">
+                <table className="table-auto w-full rounded-lg overflow-hidden">
+                  <thead className="text-center bg-blue-500 text-white">
+                    <tr>
+                      <th className="py-2 border-r-2 border-blue-600">
+                        Website
+                      </th>
+                      <th className="py-2 border-r-2 border-blue-600">
+                        Username/Email
+                      </th>
+                      <th className="py-2 border-r-2 border-blue-600">
+                        Password
+                      </th>
+                      <th className="w-20">Actions</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="text-center bg-blue-300">
+                    {passwordArray.map((item) => (
+                      <tr key={item.id} className="border-2 border-blue-600">
+                        <td className="py-2 border-r-2 border-blue-600">
+                          <div className="flex flex-col items-center md:flex-row md:items-center gap-2">
+                            <a
+                              href={item.site}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-600 underline"
+                            >
+                              {item.site}
+                            </a>
+                            <button
+                              className="bg-blue-500 text-white rounded-full p-1 hover:bg-blue-600 transition"
+                              onClick={() => copyToClipboard(item.site)}
+                            >
+                              <i className="fa-solid fa-copy"></i>
+                            </button>
+                          </div>
+                        </td>
+                        <td className="py-2 border-r-2 border-blue-600">
+                          <div className="flex flex-col items-center md:flex-row md:items-center gap-2">
+                            {item.username}
+                            <button
+                              className="bg-blue-500 text-white rounded-full p-1 hover:bg-blue-600 transition"
+                              onClick={() => copyToClipboard(item.username)}
+                            >
+                              <i className="fa-solid fa-copy"></i>
+                            </button>
+                          </div>
+                        </td>
+                        <td className="py-2 border-r-2 border-blue-600">
+                          <div className="flex flex-col items-center md:flex-row md:items-center gap-2">
+                            <input
+                              type={
+                                showPasswordArray[item.id] ? "text" : "password"
+                              }
+                              value={item.password}
+                              readOnly
+                              className="bg-transparent border-none text-center"
+                            />
+                            <button
+                              className="text-white rounded-full p-1"
+                              onClick={() => toggleShowPassword(item.id)}
+                            >
+                              <img
+                                ref={ref}
+                                className="w-5"
+                                src="show.png"
+                                alt="Toggle visibility"
+                              />
+                            </button>
+                            <button
+                              className="bg-blue-400 text-white rounded-full p-1 hover:bg-blue-600 transition"
+                              onClick={() => copyToClipboard(item.password)}
+                            >
+                              <i className="fa-solid fa-copy"></i>
+                            </button>
+                          </div>
+                        </td>
+                        <td className="w-20 flex justify-center">
+                          <button
+                            className="mr-2 text-blue-400 hover:text-blue-600 transition"
+                            onClick={() => editPassword(item.id)}
+                          >
+                            <i className="fa-solid fa-pen-to-square"></i>
+                          </button>
+                          <button
+                            className="text-red-400 hover:text-red-600 transition"
+                            onClick={() => deletePassword(item.id)}
+                          >
+                            <i className="fa-solid fa-trash"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             )}
           </div>
         </div>
