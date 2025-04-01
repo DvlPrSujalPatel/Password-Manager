@@ -19,7 +19,7 @@ const Navbar = () => {
             <i class="fa-brands fa-github"></i> Github
           </a>
           <a
-            href="https://www.linkedin.com/in/sujal-patel-4b62b0316/"
+            href="www.linkedin.com/in/devsujal"
             className="hover:text-blue-300"
           >
             Contact
